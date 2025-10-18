@@ -1,0 +1,8 @@
+1;java;false
+
+2;python;false
+
+3;mancare;true
+
+4;De dat de mancare la gaini;false
+
