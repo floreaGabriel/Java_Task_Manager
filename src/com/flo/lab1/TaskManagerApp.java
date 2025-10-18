@@ -38,21 +38,13 @@ public class TaskManagerApp {
                 case 2 -> {
                     System.out.println("[DELETE] Specifica nume: ");
                     String nume = sc.next();
-                    Task task = app.getTaskByName(nume);
-                    if (task == null) {
-                        break;
-                    }
                     app.deleteTask(nume);
                     System.out.println("[DELETED] " + nume);
                 }
                 case 3 -> {
                     System.out.println("[COMPLETE] Specifica nume: ");
                     String nume = sc.next();
-                    Task task = app.getTaskByName(nume);
-                    if (task == null) {
-                        break;
-                    }
-                    task.setCompleted();
+                    app.completeTask(nume);
                     System.out.println("[COMPLETED] " + nume);
                 }
                 case 4 -> {
@@ -86,13 +78,9 @@ public class TaskManagerApp {
             System.out.println(task.getId() + "." + task.getName() + " | Finalizat: " + task.isCompleted());
         }
     }
-    public void completeTask(int index) {
-        if (index < 1 || index >= tasks.size()) {
-            System.out.println("Nu exista taskuri");
-            return;
-        }
+    public void completeTask(String name) {
+        Task task = getTaskByName(name);
 
-        Task task = tasks.get(index - 1);
         task.setCompleted();
         System.out.println("Task finalizat: " + task.getName());
     }
