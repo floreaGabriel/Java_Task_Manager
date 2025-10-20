@@ -1,6 +1,4 @@
-package com.flo.lab1;
-
-import java.util.ArrayList;
+package com.flo.task_app;
 
 public class Task {
     private String name;
