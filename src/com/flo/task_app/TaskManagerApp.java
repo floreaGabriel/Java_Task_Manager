@@ -1,5 +1,6 @@
 package com.flo.task_app;
 
+import com.flo.task_app.model.Priority;
 import com.flo.task_app.service.TaskService;
 
 import java.io.*;
@@ -39,8 +40,12 @@ public class TaskManagerApp {
                 case 1 -> {
                     System.out.println("[ADD] Specifica nume: ");
                     String nume = sc.nextLine();
-                    app.taskService.addTask(nume);
-                    System.out.println("[ADDED] " + nume);
+                    System.out.println("[PRIORITY] L(LOW), M(MEDIUM), H(HIGH)");
+                    String priority = sc.nextLine();
+
+                    Priority prio = Priority.valueOf(priority);
+                    app.taskService.addTask(nume, prio);
+                    System.out.println("[ADDED] " + nume + " cu prioritatea " + prio);
                 }
                 case 2 -> {
                     System.out.println("[DELETE] Specifica nume: ");

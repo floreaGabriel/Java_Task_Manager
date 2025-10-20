@@ -1,6 +1,7 @@
 package com.flo.task_app.service;
 
-import com.flo.task_app.Task;
+import com.flo.task_app.model.Priority;
+import com.flo.task_app.model.Task;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -10,8 +11,8 @@ public class TaskService {
     private ArrayList<Task> tasks = new  ArrayList<>();
 
 
-    public void addTask(String name) {
-        Task task = new Task(name);
+    public void addTask(String name, Priority priority) {
+        Task task = new Task(name, priority);
         tasks.add(task);
     }
     public void printTasks() {
@@ -21,7 +22,7 @@ public class TaskService {
         }
 
         for (Task task : tasks) {
-            System.out.println(task.getId() + "." + task.getName() + " | Finalizat: " + task.isCompleted());
+            System.out.println(task.getId() + ". [" + task.getPriority() + "] " + task.getName() + " | Finalizat: " + task.isCompleted());
         }
     }
     public boolean completeTask(String name) {
