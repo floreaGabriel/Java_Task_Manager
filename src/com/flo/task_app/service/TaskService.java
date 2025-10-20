@@ -50,11 +50,10 @@ public class TaskService {
         System.out.println("Nu exista taskul {" + name + "}");
         return null;
     }
-
     public void saveTaskToFile(String filename) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
             for (Task task : tasks) {
-                bw.write(task.getId() + ";" + task.getName() + ";" + task.isCompleted() + "\n");
+                bw.write(task.getId() + ";" + task.getName() + ";" + task.isCompleted() + ";" + task.getPriority() +  "\n");
                 bw.newLine();
             }
             System.out.println("[SAVED] " + filename);
@@ -68,10 +67,11 @@ public class TaskService {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(";");
-                if (data.length == 3) {
+                if (data.length == 4) {
                     String name = data[1];
                     boolean isCompleted = Boolean.parseBoolean(data[2]);
-                    Task task = new Task(name);
+                    Priority priority = Priority.valueOf(data[3]);
+                    Task task = new Task(name,priority);
                     if (isCompleted) {
                         task.setCompleted();
                     }
