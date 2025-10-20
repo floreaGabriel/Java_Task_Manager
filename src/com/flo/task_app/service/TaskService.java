@@ -5,10 +5,12 @@ import com.flo.task_app.model.Task;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class TaskService {
 
-    private ArrayList<Task> tasks = new  ArrayList<>();
+    private List<Task> tasks = new  ArrayList<>();
 
 
     public void addTask(String name, Priority priority) {
@@ -50,6 +52,12 @@ public class TaskService {
         System.out.println("Nu exista taskul {" + name + "}");
         return null;
     }
+
+    public List<Task> getAll() {
+        return Collections.unmodifiableList(tasks);
+    }
+
+
     public void saveTaskToFile(String filename) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
             for (Task task : tasks) {
@@ -64,21 +72,30 @@ public class TaskService {
     public boolean loadTaskFromFile(String filename) {
         tasks.clear(); // ne asiguram ca nu avem nimic in tasks inainte sa citim
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+
+            int max_id = 0;
+
             String line;
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(";");
                 if (data.length == 4) {
+                    int id = Integer.parseInt(data[0]);
                     String name = data[1];
                     boolean isCompleted = Boolean.parseBoolean(data[2]);
                     Priority priority = Priority.valueOf(data[3]);
-                    Task task = new Task(name,priority);
+                    Task task = new Task(id,name,isCompleted, priority);
                     if (isCompleted) {
                         task.setCompleted();
                     }
                     tasks.add(task);
+
+
+                    if (max_id > id) max_id = id;
                 }
 
             }
+
+            Task.reseedCounter(max_id);
             return true;
         } catch (FileNotFoundException e) {
             System.out.println("[ERROR] Fisierul nu exista. Se va crea la inchiderea programului.");
@@ -87,4 +104,5 @@ public class TaskService {
         }
         return false;
     }
+
 }

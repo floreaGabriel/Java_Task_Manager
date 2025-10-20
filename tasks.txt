@@ -1,2 +1,6 @@
-1;joc;false;LOW
+1;java;false;HIGH
+
+2;task2;true;LOW
+
+3;task3;false;LOW
 
